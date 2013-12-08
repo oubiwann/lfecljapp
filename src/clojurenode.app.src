@@ -1,0 +1,17 @@
+{application, clojurenode,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { clojurenode_app, []}},
+  {env, [
+            {cmd, "cljnode-0.1.0-standalone.jar cljnode.core"},
+            {node, clj_node},
+            {mbox, clj_mbox},
+            {epmd_port, 15000}
+        ]}
+ ]}.
