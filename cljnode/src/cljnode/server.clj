@@ -22,7 +22,7 @@
     [mbox]
     (try (def msg (.receive mbox 50))
          (if (instance? OtpErlangTuple msg) (process msg mbox) ())
-         (handleErlMessages mbox)
+         #(handleErlMessages mbox)
     (catch Exception e (log/error (format (str e))))))
 
 (defn server
