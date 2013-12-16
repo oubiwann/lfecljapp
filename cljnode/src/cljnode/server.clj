@@ -22,7 +22,7 @@
     [mbox]
     (try (def msg (.receive mbox 50))
          (if (instance? OtpErlangTuple msg) (process msg mbox) ())
-         (trampoline handleErlMessages mbox)
+         (handleErlMessages mbox)
     (catch Exception e (log/error (format (str e))))))
 
 (defn server
@@ -31,5 +31,5 @@
                 NodeName Mbox Cookie Port))
     (def mbox (.createMbox (new OtpNode NodeName Cookie Port) Mbox))
     (proto/checkErlNode mbox 10000)
-    (handleErlMessages mbox)
+    (trampoline handleErlMessages mbox)
     (log/info "destroy server"))
