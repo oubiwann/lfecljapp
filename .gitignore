@@ -1,2 +1,5 @@
 priv/*.jar
 priv/*.so
+.rebar/*
+ebin/*
+erl_crash.dump
