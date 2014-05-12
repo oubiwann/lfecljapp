@@ -2,7 +2,7 @@
 
 -behaviour(gen_server).
 
--include_lib("common/include/log.hrl").
+-include_lib("include/log.hrl").
 -include_lib("eunit/include/eunit.hrl").
 
 %% API
@@ -106,7 +106,7 @@ handle_cast(ping, State) ->
     {noreply, State};
 
 handle_cast(_Msg, State) ->
-    ?ERR("unhandled cast, ~p", [_Msg]),
+    ?ERROR("unhandled cast, ~p", [_Msg]),
     {noreply, State}.
 
 %%--------------------------------------------------------------------
@@ -128,7 +128,7 @@ handle_info(ping, State) ->
 
 handle_info({pong, Pid}, #state {remote_pid = undefined,
                                  waiters = Waiters} = State) ->
-    ?LOG("connection to java node established, pid ~p", [Pid]),
+    ?INFO("connection to java node established, pid ~p", [Pid]),
     link(Pid),
     lists:foreach(fun(Waiter) ->
                           gen_server:cast(self(), {wait_for_login, Waiter})
@@ -140,15 +140,15 @@ handle_info({pong, _}, State) ->
     {noreply, State};
 
 handle_info({Port, {exit_status, Status}}, #state {ext_port_ref = Port} = State) ->
-    ?ERR("external java app exited with status ~p", [Status]),
+    ?ERROR("external java app exited with status ~p", [Status]),
     {stop, {error, {java_app_exit, Status}}, State};
 
 handle_info({'EXIT', Pid, Reason}, #state {remote_pid = Pid} = State) ->
-    ?ERR("external java mbox exited with reason ~p", [Reason]),
+    ?ERROR("external java mbox exited with reason ~p", [Reason]),
     {stop, {error, {java_mbox_exit, Reason}}, State};
 
 handle_info(_Info, State) ->
-    ?ERR("unhandled info, ~p", [_Info]),
+    ?ERROR("unhandled info, ~p", [_Info]),
     {noreply, State}.
 
 %%--------------------------------------------------------------------
@@ -190,14 +190,14 @@ start_app() ->
     PrivDir        = code:priv_dir(clojurenode),
     %% If config file is the relative path then append priv directory
     LogFileName = atom_to_list(node()) ++ "_clj.log",
-    CmdWithParams = "java "++
-        "-Dnode=\""++atom_to_list(Node) ++ "\" " ++
-        "-Dmbox=\""++atom_to_list(Mbox) ++ "\" " ++
-        "-Dcookie=\""++atom_to_list(erlang:get_cookie()) ++ "\" " ++
-        "-Depmd_port="++lists:flatten(io_lib:format("~p", [Port])) ++ " " ++
-        "-Dlogfile=\""++PrivDir ++ "/" ++ LogFileName++"\" " ++
+    CmdWithParams = "java " ++
+        "-Dnode=\"" ++ atom_to_list(Node) ++ "\" " ++
+        "-Dmbox=\"" ++ atom_to_list(Mbox) ++ "\" " ++
+        "-Dcookie=\"" ++ atom_to_list(erlang:get_cookie()) ++ "\" " ++
+        "-Depmd_port=" ++ lists:flatten(io_lib:format("~p", [Port])) ++ " " ++
+        "-Dlogfile=\"" ++ PrivDir ++ "/" ++ LogFileName ++ "\" " ++
         "-classpath " ++ PrivDir ++ "/" ++ Cmd ++ " ",
-    ?LOG("starting clojure app with cmd ~p", [CmdWithParams]),
+    ?INFO("starting clojure app with cmd ~p", [CmdWithParams]),
     open_port({spawn, CmdWithParams}, [exit_status]).
 
 ping(Host, Node, Mbox) ->
