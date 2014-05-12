@@ -9,7 +9,7 @@
                  ]},
   {mod, { lfecljapp_app, []}},
   {env, [
-            {cmd, "cljnode-0.1.0-standalone.jar cljnode.core"},
+            {cmd, "cljnode-0.1.1-standalone.jar cljnode.core"},
             {node, clj_node},
             {mbox, clj_mbox},
             {epmd_port, 15000}
