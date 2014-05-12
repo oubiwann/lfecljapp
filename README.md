@@ -1,9 +1,11 @@
 # erlang-clojure-node
 
-To get started, build the Clojure Uberjar for ``cljnode`` and compile the
-Erlang source files:
+*Erlang-Clojure (JVM) Interop using JInterface.*
 
 ## Building
+
+To get started, build the Clojure Uberjar for ``cljnode`` and compile the
+Erlang source files:
 
 ```bash
 $ make compile
