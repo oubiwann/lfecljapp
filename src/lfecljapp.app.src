@@ -7,7 +7,7 @@
                   kernel,
                   stdlib
                  ]},
-  {mod, { lfecljapp_app, []}},
+  {mod, {'lfecljapp-app', []}},
   {env, [
             {cmd, "cljnode-0.1.1-standalone.jar cljnode.core"},
             {node, clj_node},
