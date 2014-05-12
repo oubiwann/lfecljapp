@@ -16,7 +16,7 @@
                                                     javax.jms/jms
                                                     com.sun.jmdk/jmxtools
                                                     com.sun.jmx/jmxri]]
-                  [com.ericsson.otp.erlang/otperlang "1.5.3"]]
+                  [org.erlang.otp/jinterface "1.5.6"]]
   :main cljnode.core
   :target-path "target/"
   :profiles {:uberjar {:aot :all}})
