@@ -61,7 +61,7 @@ Now that you've got both ends of the connection up, you can take it for a
 spin with a ping command:
 
 ```erlang
-(erl_node@cahwsx01)1> lfecljapp_util:ping(
+(erl_node@cahwsx01)1> 'lfecljapp-util`:ping(
   clj_mbox, clj_node@cahwsx01, self()).
 {ping,<0.57.0>})
 ```

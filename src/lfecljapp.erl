@@ -201,7 +201,7 @@ start_app() ->
     open_port({spawn, CmdWithParams}, [exit_status]).
 
 ping(Host, Node, Mbox) ->
-    lfecljapp_util:ping(Mbox, full_node_name(Host, Node), self()).
+    'lfecljapp-util':ping(Mbox, full_node_name(Host, Node), self()).
 
 full_node_name(Host, Node) ->
     list_to_atom(atom_to_list(Node) ++ "@" ++ Host).

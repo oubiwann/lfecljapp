@@ -29,7 +29,7 @@ shell:
 	erl -sname erl_node@$(HOST) -pa `pwd`/ebin
 
 dev:
-	erl -sname erl_node@$(HOST) -pa `pwd`/ebin -s lfecljapp_util
+	erl -sname erl_node@$(HOST) -pa `pwd`/ebin -s 'lfecljapp-util'
 
 repl: erlang
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
