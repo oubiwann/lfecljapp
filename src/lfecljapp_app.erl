@@ -10,7 +10,7 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
-    lfecljapp_sup:start_link().
+    'lfecljapp-sup':start_link().
 
 stop(_State) ->
     ok.
