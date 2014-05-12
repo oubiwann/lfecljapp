@@ -31,15 +31,15 @@ shell:
 dev:
 	erl -sname erl_node@$(HOST) -pa `pwd`/ebin -s lfecljapp_util
 
-repl: compile
+repl: erlang
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting shell ..."
-	@PATH=$(SCRIPT_PATH) lfetool repl
+	@PATH=$(SCRIPT_PATH) lfetool repl #lfe -sname erl_node@$(HOST)
 
-repl-no-deps: compile-no-deps
+repl-no-deps: erlang-no-deps
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting shell ..."
-	@PATH=$(SCRIPT_PATH) lfetool repl
+	@PATH=$(SCRIPT_PATH) lfetool repl #lfe -sname erl_node@$(HOST)
 
 clean: clean-ebin clean-eunit
 	@-which rebar.cmd >/dev/null 2>&1 && rebar.cmd clean || rebar clean
