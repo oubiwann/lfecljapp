@@ -1,5 +1,4 @@
-(ns
-    cljnode.proto_handler
+(ns cljnode.proto_handler
     #^{:author "Maxim Molchanov <elzor.job@gmail.com>",
        :doc "Protocol handler class"}
     (:require [clojure.tools.logging :as log])

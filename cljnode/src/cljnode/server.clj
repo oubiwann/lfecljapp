@@ -1,5 +1,4 @@
-(ns
-    cljnode.server
+(ns cljnode.server
     #^{:author "Maxim Molchanov <elzor.job@gmail.com>",
        :doc "Main server class"}
     (:require [clojure.tools.logging :as log]

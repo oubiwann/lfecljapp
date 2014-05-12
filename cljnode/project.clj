@@ -1,6 +1,9 @@
 (defproject cljnode "0.1.0"
-  :jvm-opts ["-Ddev_env=dev" "-Dnode=cljnode@127.0.0.1" "-Dmbox=mboxname"
-             "-Dcookie=cookie" "-Depmd_port=15000"]
+  :jvm-opts ["-Ddev_env=dev"
+             "-Dnode=cljnode@127.0.0.1"
+             "-Dmbox=mboxname"
+             "-Dcookie=nocookie"
+             "-Depmd_port=15000"]
   :description "clojure + erlang"
   :url "http://vonmo.com/projects/cljnode"
   :license {:name "Eclipse Public License"
@@ -14,6 +17,6 @@
                                                      com.sun.jmdk/jmxtools
                                                      com.sun.jmx/jmxri]]
                   [com.ericsson.otp.erlang/otperlang "1.5.3"]]
-  :main ^:skip-aot cljnode.core
-  :target-path "target/%s"
+  :main cljnode.core
+  :target-path "target/"
   :profiles {:uberjar {:aot :all}})

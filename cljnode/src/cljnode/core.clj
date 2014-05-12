@@ -1,5 +1,4 @@
-(ns
-    cljnode.core
+(ns cljnode.core
     #^{:author "Maxim Molchanov <elzor.job@gmail.com>",
        :doc "Node run point"}
     (:require [clojure.tools.logging :as log]
