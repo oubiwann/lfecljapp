@@ -22,7 +22,7 @@ link:
 
 shell: link
 	cd ../$(EXPECTED_APP_NAME)/ && \
-	erl -pa `pwd`/ebin
+	erl -sname erl_node@$(HOST) -pa `pwd`/ebin
 
 dev: link
 	cd ../$(EXPECTED_APP_NAME)/ && \
