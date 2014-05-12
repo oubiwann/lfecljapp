@@ -1,5 +1,5 @@
 
--module(clojurenode_sup).
+-module(lfecljapp_sup).
 
 -behaviour(supervisor).
 
@@ -24,5 +24,5 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    {ok, { {one_for_one, 5, 10}, [?CHILD(clj_controller, worker)]} }.
+    {ok, { {one_for_one, 5, 10}, [?CHILD(lfecljapp, worker)]} }.
 

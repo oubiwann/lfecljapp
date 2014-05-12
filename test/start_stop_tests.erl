@@ -30,16 +30,16 @@ cleanup(_)->
 main_test_() ->
     ?FIXTURE(
         fun()->
-            ?assertEqual(ok, application:load(clojurenode)),
-            ?assertEqual(ok, application:start(clojurenode)),
+            ?assertEqual(ok, application:load(lfecljapp)),
+            ?assertEqual(ok, application:start(lfecljapp)),
             %% wait for java start
             timer:sleep(3000),
             ?assertEqual(
-                {error,{already_started, clojurenode}},
-                application:start(clojurenode)
+                {error,{already_started, lfecljapp}},
+                application:start(lfecljapp)
                 ),
-            ?assertEqual(ok, application:stop(clojurenode)),
-            ?assertEqual(ok, application:unload(clojurenode)),
+            ?assertEqual(ok, application:stop(lfecljapp)),
+            ?assertEqual(ok, application:unload(lfecljapp)),
             ok
         end
         ).

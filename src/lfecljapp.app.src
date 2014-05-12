@@ -1,4 +1,4 @@
-{application, clojurenode,
+{application, lfecljapp,
  [
   {description, ""},
   {vsn, "1"},
@@ -7,7 +7,7 @@
                   kernel,
                   stdlib
                  ]},
-  {mod, { clojurenode_app, []}},
+  {mod, { lfecljapp_app, []}},
   {env, [
             {cmd, "cljnode-0.1.0-standalone.jar cljnode.core"},
             {node, clj_node},

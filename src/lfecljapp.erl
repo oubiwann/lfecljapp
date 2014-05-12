@@ -1,4 +1,4 @@
--module(clj_controller).
+-module(lfecljapp).
 
 -behaviour(gen_server).
 
@@ -93,9 +93,9 @@ handle_cast({stop_test, Reason}, State)->
     {stop, Reason, State};
 
 handle_cast(ping, State) ->
-    {ok, Node}   = application:get_env(clojurenode, node),
-    {ok, Mbox}   = application:get_env(clojurenode, mbox),
-    {ok, Host}   = case application:get_env(clojurenode, host) of
+    {ok, Node}   = application:get_env(lfecljapp, node),
+    {ok, Mbox}   = application:get_env(lfecljapp, mbox),
+    {ok, Host}   = case application:get_env(lfecljapp, host) of
                            undefined ->
                                inet:gethostname();
                            Other ->
@@ -181,13 +181,13 @@ code_change(_OldVsn, State, _Extra) ->
 %%%===================================================================
 
 start_app() ->
-    {ok, NodeCfg}  = application:get_env(clojurenode, node),
+    {ok, NodeCfg}  = application:get_env(lfecljapp, node),
     {ok, HostName} = inet:gethostname(),
     Node           = full_node_name(HostName, NodeCfg),
-    {ok, Mbox}     = application:get_env(clojurenode, mbox),
-    {ok, Cmd}      = application:get_env(clojurenode, cmd),
-    {ok, Port}     = application:get_env(clojurenode, epmd_port),
-    PrivDir        = code:priv_dir(clojurenode),
+    {ok, Mbox}     = application:get_env(lfecljapp, mbox),
+    {ok, Cmd}      = application:get_env(lfecljapp, cmd),
+    {ok, Port}     = application:get_env(lfecljapp, epmd_port),
+    PrivDir        = code:priv_dir(lfecljapp),
     %% If config file is the relative path then append priv directory
     LogFileName = atom_to_list(node()) ++ "_clj.log",
     CmdWithParams = "java " ++
@@ -201,7 +201,7 @@ start_app() ->
     open_port({spawn, CmdWithParams}, [exit_status]).
 
 ping(Host, Node, Mbox) ->
-    erlang:send({Mbox, full_node_name(Host, Node)}, {ping, self()}).
+    lfecljapp_util:ping(Mbox, full_node_name(Host, Node), self()).
 
 full_node_name(Host, Node) ->
     list_to_atom(atom_to_list(Node) ++ "@" ++ Host).
