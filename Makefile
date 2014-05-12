@@ -8,8 +8,10 @@ ifeq ($(OS),Darwin)
 	HOST = $(shell scutil --get ComputerName)
 endif
 
-clojure:
-	-mkdir priv
+priv:
+	mkdir priv
+
+clojure: priv
 	make -C cljnode --no-print-directory
 	mv cljnode/target/*.jar priv
 
