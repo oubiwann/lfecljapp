@@ -1,6 +1,11 @@
-# erlang-clojure-node
+# lfecljapp
 
-*Erlang-Clojure (JVM) Interop using JInterface.*
+*LFE-Clojure (JVM) Interop using JInterface.*
+
+## Caveat
+
+This is a work in progress. This project is being ported from its
+predecessor, an Erlang-Clojure app.
 
 ## Building
 
