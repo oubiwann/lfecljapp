@@ -25,21 +25,24 @@ compile: clojure erlang
 
 compile-no-deps: clojure erlang-no-deps
 
-shell:
-	erl -sname erl_node@$(HOST) -pa `pwd`/ebin
-
 dev:
-	erl -sname erl_node@$(HOST) -pa `pwd`/ebin -s 'lfecljapp-util'
+	@which clear >/dev/null 2>&1 && clear || printf "\033c"
+	@echo "Starting shell ..."
+	@ERL_LIBS=$(ERL_LIBS) \
+	PATH=$(SCRIPT_PATH) lfe -sname lfenode@$(HOST) \
+	-s 'lfecljapp-util' -pa `pwd`/ebin
 
 repl: erlang
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting shell ..."
-	@PATH=$(SCRIPT_PATH) lfetool repl #lfe -sname erl_node@$(HOST)
+	@ERL_LIBS=$(ERL_LIBS) \
+	PATH=$(SCRIPT_PATH) lfetool repl lfe -sname lfenode@$(HOST) -pa `pwd`/ebin
 
 repl-no-deps: erlang-no-deps
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting shell ..."
-	@PATH=$(SCRIPT_PATH) lfetool repl #lfe -sname erl_node@$(HOST)
+	@ERL_LIBS=$(ERL_LIBS) \
+	PATH=$(SCRIPT_PATH) lfetool repl lfe -sname lfenode@$(HOST) -pa `pwd`/ebin
 
 clean: clean-ebin clean-eunit
 	@-which rebar.cmd >/dev/null 2>&1 && rebar.cmd clean || rebar clean

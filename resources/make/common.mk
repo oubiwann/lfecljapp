@@ -9,6 +9,7 @@ OUT_DIR = ./ebin
 TEST_DIR = ./test
 TEST_OUT_DIR = ./.eunit
 SCRIPT_PATH=.:./bin:"$(PATH)":/usr/local/bin
+ERL_LIBS=$(shell lfetool info erllibs)
 
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
