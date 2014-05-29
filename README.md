@@ -1,5 +1,9 @@
 # lfecljapp
 
+<a href="resources/images/LispFlavoredErlangClojure-medium-square.png">
+<img src="resources/images/LispFlavoredErlangClojure-small-square.png" />
+</a>
+
 *LFE-Clojure (JVM) Interop using JInterface.*
 
 ## Caveat
