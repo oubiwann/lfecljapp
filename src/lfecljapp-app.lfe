@@ -1,7 +1,12 @@
 (defmodule lfecljapp-app
   (behaviour application)
-  (export (start 2)
+  (export (start 0)
+          (start 2)
           (stop 1)))
+
+(defun start ()
+  (application:load 'lfecljapp)
+  (application:start 'lfecljapp))
 
 (defun start (type args)
   (let ((result (lfecljapp-sup:start_link)))

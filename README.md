@@ -26,7 +26,7 @@ $ make repl
 ```
 
 ```lfe
-(lfenode@cahwsx01)> (lfecljapp-util:start)
+(lfenode@cahwsx01)> (lfecljapp-app:start)
 ok
 ```
 
