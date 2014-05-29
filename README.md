@@ -87,6 +87,11 @@ spin with a ping command:
 #(ping <0.32.0>)
 ```
 
+The node name used in the example above was taken from the output when the
+Clojure node was started up. In particular, look for the line beginning with
+``INFO: Starting clojure app ...`` and the value associated with the ``-Dnode``
+parameter. That's your destination node in this case.
+
 To see the response from the Clojure node, you'll need to flush the shell:
 
 ```cl
