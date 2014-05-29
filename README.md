@@ -6,10 +6,19 @@
 
 *LFE-Clojure (JVM) Interop using JInterface.*
 
-## Caveat
+## Introduction
 
-This is a work in progress. This project is being ported from its
-predecessor, an Erlang-Clojure app.
+This project is a port of Maxim Molchanov's example Erlang + Clojure interop
+project (via JInterface). Only minor changes were made to the Clojure code.
+The Erlang code was completely replaced with LFE.
+
+This project demonstrates how one can:
+
+1. Create a Clojure project which utilizes Erlang JInterface to communicate
+   with Erlang nodes,
+1. Start a supervised Clojure node in LFE,
+1. Send a message to Clojure nodes from LFE, and
+1. Receive responses from the Clojure nodes in LFE.
 
 ## Building
 
