@@ -34,7 +34,7 @@ get-deps:
 
 clean-ebin:
 	@echo "Cleaning ebin dir ..."
-	@-rm -f $(OUT_DIR)/*.beam
+	@-rm -f $(OUT_DIR)/*.beam $(OUT_DIR)/*.app
 
 clean-eunit:
 	@-PATH=$(SCRIPT_PATH) lfetool tests clean

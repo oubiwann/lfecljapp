@@ -4,7 +4,7 @@
 <img src="resources/images/LispFlavoredErlangClojure-small-square.png" />
 </a>
 
-*LFE-Clojure (JVM) Interop using JInterface.*
+*LFE-Clojure (JVM) Interop using JInterface*
 
 ## Introduction
 

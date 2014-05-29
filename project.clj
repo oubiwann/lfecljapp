@@ -1,10 +1,10 @@
-(defproject cljnode "0.1.1"
+(defproject cljnode "0.1.2"
   :jvm-opts ["-Ddev_env=dev"
              "-Dnode=cljnode@127.0.0.1"
              "-Dmbox=mboxname"
              "-Dcookie=nocookie"
              "-Depmd_port=15000"]
-  :description "clojure + erlang"
+  :description "Clojure + LFE"
   :url "http://vonmo.com/projects/cljnode"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
@@ -18,5 +18,6 @@
                                                     com.sun.jmx/jmxri]]
                   [org.erlang.otp/jinterface "1.5.6"]]
   :main cljnode.core
+  :source-paths ["src/clj"]
   :target-path "target/"
   :profiles {:uberjar {:aot :all}})

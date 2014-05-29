@@ -1,7 +1,7 @@
 {application, lfecljapp,
  [
-  {description, ""},
-  {vsn, "1"},
+  {description, "LFE-Clojure (JVM) Interop using JInterface"},
+  {vsn, "0.1.2"},
   {registered, []},
   {applications, [
                   kernel,
@@ -9,7 +9,7 @@
                  ]},
   {mod, {'lfeclj-app', []}},
   {env, [
-            {cmd, "cljnode-0.1.1-standalone.jar cljnode.core"},
+            {cmd, "cljnode-0.1.2-standalone.jar cljnode.core"},
             {node, "clj-node"},
             {mbox, "clj-mbox"},
             {host, undefined},

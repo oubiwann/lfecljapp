@@ -1,8 +1,0 @@
-2013-12-08 15:23:37,842 INFO  [main] start
-2013-12-08 15:23:37,843 INFO  [main] started with params:
-	nodename: clj_node@ewm
-	mbox: clj_mbox
-	cookie: IWTCJHGBARFWYBQLHMKI
-	epmd_port: 15000
-2013-12-08 15:23:38,386 INFO  [main] linked with erlang #Pid<t@ewm.39.0>
-2013-12-08 15:23:38,387 INFO  [main] erlang node checked
