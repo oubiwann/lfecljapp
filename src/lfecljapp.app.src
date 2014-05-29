@@ -10,8 +10,10 @@
   {mod, {'lfecljapp-app', []}},
   {env, [
             {cmd, "cljnode-0.1.1-standalone.jar cljnode.core"},
-            {node, "cljnode"},
-            {mbox, "cljmbox"},
-            {'epmd-port', "15000"}
+            {node, "clj-node"},
+            {mbox, "clj-mbox"},
+            {host, undefined},
+            {'epmd-port', "15000"},
+            {'ping-interval', 1000}
         ]}
  ]}.

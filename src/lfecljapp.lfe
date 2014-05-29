@@ -22,7 +22,6 @@
   ext-port-ref)
 
 (defun server-name () (MODULE))
-(defun ping-interval () 1000)
 (defun FILE () (++ (atom_to_list (MODULE)) ".lfe"))
 ;;;===================================================================
 ;;; API
@@ -63,6 +62,11 @@
 (defun stop (reason)
   (gen_server:cast (server-name) (tuple 'stop-test reason)))
 
+(defun ping (host node mbox)
+  (lfecljapp-util:ping
+    (list_to_atom mbox)
+    (list_to_atom (lfecljapp-util:make-name node host))
+    (self)))
 ;;--------------------------------------------------------------------
 ;; @private
 ;; @doc
@@ -94,13 +98,15 @@
   (((tuple 'stop-test reason) state)
    (tuple 'stop reason state))
   (('ping state)
-   (let (((tuple 'ok node) (application:get_env 'lfecljapp 'node))
-         ((tuple 'ok mbox) (application:get_env 'lfecljapp 'mbox))
-         ((tuple 'ok host) (case (application:get_env 'lfecljapp 'host)
-                             ('undefined (inet:gethostname))
-                             (other other))))
+   (let ((node (lfecljapp-cfg:get 'node))
+         (mbox (lfecljapp-cfg:get 'mbox))
+         (host (case (lfecljapp-cfg:get 'host)
+                 ('undefined (element 2 (inet:gethostname)))
+                 (other other))))
      (ping host node mbox)
-     (erlang:send_after (ping-interval) (self) 'ping)
+     (erlang:send_after (lfecljapp-cfg:get 'ping-interval)
+                        (self)
+                        'ping)
      (tuple 'noreply state)))
   ((message state)
    (ERROR "Unhandled case: '~p'" (list message))
@@ -178,25 +184,18 @@
 ;;;===================================================================
 
 (defun start-clojure ()
-  (let* (((tuple 'ok node-cfg) (application:get_env 'lfecljapp 'node))
-         ((tuple 'ok host-name) (inet:gethostname))
-         (node (++ node-cfg "@" host-name))
-         ((tuple 'ok mbox) (application:get_env 'lfecljapp 'mbox))
-         ((tuple 'ok cmd) (application:get_env 'lfecljapp 'cmd))
-         ((tuple 'ok port) (application:get_env 'lfecljapp 'epmd-port))
+  (let* ((node (lfecljapp-cfg:get 'node))
+         ((tuple 'ok host) (inet:gethostname))
+         (node-name (lfecljapp-util:make-name node host))
+         (cmd (lfecljapp-cfg:get 'cmd))
          (priv-dir (code:priv_dir 'lfecljapp))
          (log-file-name (++ (atom_to_list (node)) "_clj.log"))
-         (full-cmd (++ "java -Dnode=\"" node
-                       "\" -Dmbox=\"" mbox
+         (full-cmd (++ "java -Dnode=\"" node-name
+                       "\" -Dmbox=\"" (lfecljapp-cfg:get 'mbox)
                        "\" -Dcookie=\"" (atom_to_list (erlang:get_cookie))
-                       "\" -Depmd_port=" port
+                       "\" -Depmd_port=" (lfecljapp-cfg:get 'epmd-port)
                        " -Dlogfile=\"" priv-dir "/" log-file-name
                        "\" -classpath " priv-dir "/" cmd " ")))
     (INFO "Starting clojure app with cmd: ~p" (list full-cmd))
     (open_port `#(spawn ,full-cmd) (list 'exit_status))))
 
-(defun ping (host node mbox)
-  (lfecljapp-util:ping
-    (list_to_atom mbox)
-    (list_to_atom (++ node "@" host))
-    (self)))

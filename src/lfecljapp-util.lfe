@@ -1,6 +1,7 @@
 (defmodule lfecljapp-util
-  (export (start 0)
-          (ping 3)))
+  (export (make-name 2)
+          (ping 3)
+          (start 0)))
 
 (defun start ()
   (application:load 'lfecljapp)
@@ -9,3 +10,6 @@
 (defun ping (mbox recip sender)
   (erlang:send (tuple mbox recip)
                (tuple 'ping sender)))
+
+(defun make-name (node host)
+  (++ node "@" host))

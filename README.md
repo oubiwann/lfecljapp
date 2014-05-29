@@ -57,7 +57,7 @@ Now that you've got both ends of the connection up, you can take it for a
 spin with a ping command:
 
 ```cl
-(lfenode@cahwsx01)> (lfecljapp:ping "cahwsx01" "cljnode" "cljmbox")
+(lfenode@cahwsx01)> (lfecljapp:ping "cahwsx01" "clj-node" "clj-mbox")
 #(ping <0.32.0>)
 ```
 
