@@ -11,6 +11,7 @@
           (code_change 3))
   ;; Only for tests
   (export (stop 1)
+          (ping 2)
           (ping 3)))
 
 (include-lib "include/log.hrl")
@@ -62,11 +63,15 @@
 (defun stop (reason)
   (gen_server:cast (server-name) (tuple 'stop-test reason)))
 
-(defun ping (host node mbox)
+(defun ping (node mbox)
   (lfeclj-util:ping
     (list_to_atom mbox)
-    (list_to_atom (lfeclj-util:make-name node host))
+    (list_to_atom node)
     (self)))
+
+(defun ping (host node mbox)
+  (ping (lfeclj-util:make-name node host) mbox))
+
 ;;--------------------------------------------------------------------
 ;; @private
 ;; @doc
