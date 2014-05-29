@@ -4,3 +4,12 @@ priv/*.so
 ebin/*
 erl_crash.dump
 deps/*
+cljnode/target
+cljnode/classes
+cljnode/checkouts
+cljnodepom.xml
+cljnodepom.xml.asc
+*.jar
+*.class
+cljnode/.lein-*
+cljnode/.nrepl-port
