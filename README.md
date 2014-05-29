@@ -20,6 +20,19 @@ This project demonstrates how one can:
 1. Send a message to Clojure nodes from LFE, and
 1. Receive responses from the Clojure nodes in LFE.
 
+
+### Dependencies
+
+#### LFE Side of the House
+
+* Erlang
+* ``lfetool`` + ``rebar``
+
+#### Clojure Side of the House
+
+* Java
+* ``lein``
+
 ## Building
 
 To get started, build the Clojure Uberjar for ``cljnode`` and compile the
