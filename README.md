@@ -101,3 +101,12 @@ ok
 ```
 
 Hurray! A successful response from the Clojure node!
+
+## Fun for the Future
+
+Here are some things I'd like to play with in this project:
+
+* Setting up some example long-running computations in Clojure.
+* Spawn multiple nodes and distribute computations across an LFE cluster.
+* Use ``lfecljapp`` as a proxy to a Storm cluster, and explores ways in which
+  it might be useful to interact with Storm from LFE.
