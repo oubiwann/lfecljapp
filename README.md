@@ -22,7 +22,7 @@ Once everything has compile successfully, you can start an Erlang shell and
 then bring the app up:
 
 ```bash
-$ make shell
+$ make repl
 ```
 
 ```lfe
