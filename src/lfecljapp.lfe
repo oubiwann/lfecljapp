@@ -10,7 +10,8 @@
           (terminate 2)
           (code_change 3))
   ;; Only for tests
-  (export (stop 1)))
+  (export (stop 1)
+          (ping 3)))
 
 (include-lib "include/log.hrl")
 (include-lib "eunit/include/eunit.hrl")
@@ -54,7 +55,7 @@
 ;; @end
 ;;--------------------------------------------------------------------
 (defun init (args)
-  (let ((port (start-app)))
+  (let ((port (start-clojure)))
     (gen_server:cast (self) 'ping)
     (tuple 'ok (make-state ext-port-ref port))))
 
@@ -176,27 +177,26 @@
 ;;; Internal functions
 ;;;===================================================================
 
-(defun start-app ()
+(defun start-clojure ()
   (let* (((tuple 'ok node-cfg) (application:get_env 'lfecljapp 'node))
          ((tuple 'ok host-name) (inet:gethostname))
-         (node (full-node-name host-name node-cfg))
+         (node (++ node-cfg "@" host-name))
          ((tuple 'ok mbox) (application:get_env 'lfecljapp 'mbox))
          ((tuple 'ok cmd) (application:get_env 'lfecljapp 'cmd))
-         ((tuple 'ok port) (application:get_env 'lfecljapp 'epmd_port))
+         ((tuple 'ok port) (application:get_env 'lfecljapp 'epmd-port))
          (priv-dir (code:priv_dir 'lfecljapp))
          (log-file-name (++ (atom_to_list (node)) "_clj.log"))
-         (full-cmd (++ "java -Dnode=\"" (atom_to_list node)
-                       "\" -Dmbox=\"" (atom_to_list mbox)
+         (full-cmd (++ "java -Dnode=\"" node
+                       "\" -Dmbox=\"" mbox
                        "\" -Dcookie=\"" (atom_to_list (erlang:get_cookie))
-                       "\" -Depmd_port=" (lists:flatten
-                                           (io_lib:format "~p" (list port)))
+                       "\" -Depmd_port=" port
                        " -Dlogfile=\"" priv-dir "/" log-file-name
                        "\" -classpath " priv-dir "/" cmd " ")))
     (INFO "Starting clojure app with cmd: ~p" (list full-cmd))
     (open_port `#(spawn ,full-cmd) (list 'exit_status))))
 
 (defun ping (host node mbox)
-  (lfecljapp-util:ping mbox (full-node-name host node) (self)))
-
-(defun full-node-name (host node)
-  (list_to_atom (++ (atom_to_list node) "@" host)))
+  (lfecljapp-util:ping
+    (list_to_atom mbox)
+    (list_to_atom (++ node "@" host))
+    (self)))

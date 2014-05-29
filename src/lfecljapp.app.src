@@ -10,8 +10,8 @@
   {mod, {'lfecljapp-app', []}},
   {env, [
             {cmd, "cljnode-0.1.1-standalone.jar cljnode.core"},
-            {node, clj_node},
-            {mbox, clj_mbox},
-            {epmd_port, 15000}
+            {node, "cljnode"},
+            {mbox, "cljmbox"},
+            {'epmd-port', "15000"}
         ]}
  ]}.
