@@ -1,4 +1,4 @@
-(defmodule lfecljapp-sup
+(defmodule lfeclj-sup
   (behaviour supervisor)
   ;; API
   (export (start_link 0))
@@ -6,7 +6,7 @@
   (export (init 1)))
 
 (defun server-name ()
-  'lfecljapp-sup)
+  'lfeclj-sup)
 
 (defun start_link ()
   (supervisor:start_link

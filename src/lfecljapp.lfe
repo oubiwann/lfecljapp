@@ -63,9 +63,9 @@
   (gen_server:cast (server-name) (tuple 'stop-test reason)))
 
 (defun ping (host node mbox)
-  (lfecljapp-util:ping
+  (lfeclj-util:ping
     (list_to_atom mbox)
-    (list_to_atom (lfecljapp-util:make-name node host))
+    (list_to_atom (lfeclj-util:make-name node host))
     (self)))
 ;;--------------------------------------------------------------------
 ;; @private
@@ -98,13 +98,13 @@
   (((tuple 'stop-test reason) state)
    (tuple 'stop reason state))
   (('ping state)
-   (let ((node (lfecljapp-cfg:get 'node))
-         (mbox (lfecljapp-cfg:get 'mbox))
-         (host (case (lfecljapp-cfg:get 'host)
+   (let ((node (lfeclj-cfg:get 'node))
+         (mbox (lfeclj-cfg:get 'mbox))
+         (host (case (lfeclj-cfg:get 'host)
                  ('undefined (element 2 (inet:gethostname)))
                  (other other))))
      (ping host node mbox)
-     (erlang:send_after (lfecljapp-cfg:get 'ping-interval)
+     (erlang:send_after (lfeclj-cfg:get 'ping-interval)
                         (self)
                         'ping)
      (tuple 'noreply state)))
@@ -184,16 +184,16 @@
 ;;;===================================================================
 
 (defun start-clojure ()
-  (let* ((node (lfecljapp-cfg:get 'node))
+  (let* ((node (lfeclj-cfg:get 'node))
          ((tuple 'ok host) (inet:gethostname))
-         (node-name (lfecljapp-util:make-name node host))
-         (cmd (lfecljapp-cfg:get 'cmd))
+         (node-name (lfeclj-util:make-name node host))
+         (cmd (lfeclj-cfg:get 'cmd))
          (priv-dir (code:priv_dir 'lfecljapp))
          (log-file-name (++ (atom_to_list (node)) "_clj.log"))
          (full-cmd (++ "java -Dnode=\"" node-name
-                       "\" -Dmbox=\"" (lfecljapp-cfg:get 'mbox)
+                       "\" -Dmbox=\"" (lfeclj-cfg:get 'mbox)
                        "\" -Dcookie=\"" (atom_to_list (erlang:get_cookie))
-                       "\" -Depmd_port=" (lfecljapp-cfg:get 'epmd-port)
+                       "\" -Depmd_port=" (lfeclj-cfg:get 'epmd-port)
                        " -Dlogfile=\"" priv-dir "/" log-file-name
                        "\" -classpath " priv-dir "/" cmd " ")))
     (INFO "Starting clojure app with cmd: ~p" (list full-cmd))

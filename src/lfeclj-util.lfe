@@ -1,4 +1,4 @@
-(defmodule lfecljapp-util
+(defmodule lfeclj-util
   (export (make-name 2)
           (ping 3)))
 

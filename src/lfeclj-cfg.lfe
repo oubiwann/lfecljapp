@@ -1,4 +1,4 @@
-(defmodule lfecljapp-cfg
+(defmodule lfeclj-cfg
   (export all))
 
 (defun get (key)

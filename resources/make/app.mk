@@ -30,7 +30,7 @@ dev:
 	@echo "Starting shell ..."
 	@ERL_LIBS=$(ERL_LIBS) \
 	PATH=$(SCRIPT_PATH) lfe -sname lfenode@$(HOST) \
-	-s 'lfecljapp-app' -pa `pwd`/ebin
+	-s 'lfeclj-app' -pa `pwd`/ebin
 
 repl: erlang
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
