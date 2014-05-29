@@ -102,7 +102,7 @@
      (erlang:send_after (ping-interval) (self) 'ping)
      (tuple 'noreply state)))
   ((message state)
-   (ERROR "unhandled case, ~p" (list message))
+   (ERROR "Unhandled case: '~p'" (list message))
    (tuple 'noreply state)))
 
 ;;--------------------------------------------------------------------
@@ -117,30 +117,18 @@
 ;;--------------------------------------------------------------------
 (defun handle_info
 
-;; Erlang test for first
-;; lfecljapp:handle_info(ping, {state,undefined,[],233}).
-;; {noreply,{state,undefined,[],undefined}}
-;; flush().
-;; Shell got {'$gen_cast',ping}
-;;
-;; LFE test for first
-;; (handle_info 'ping (make-state waiters (1 2 3) ext-port-ref 456))
+  ;; match 1
   (('ping (= (match-state remote-pid 'undefined) state))
+    (gen_server:cast (self) 'ping)
     `#(noreply ,state))
-;; Erlang test for second
-;; lfecljapp:handle_info(ping, {state,"apples",[],123}).
-;; {noreply,{state,"apples",[],123}}
-;;
-;; LFE test for second
-;; (handle_info 'ping (make-state remote-pid 123))
+  ;; match 2
   (('ping state)
    `#(noreply ,state))
-;; LFE test for third
-;; (handle_info #(pong 798) (make-state waiters (1 2 3) ext-port-ref 456))
+  ;; match 3
   (((tuple 'pong pid) (= (match-state remote-pid 'undefined
                                       waiters waiters)
                          state))
-   (INFO "Connection to java node established, pid: '~p'" (list pid))
+   (INFO "Connection to java node established, pid: ~p" (list pid))
    (link pid)
    (lists:foreach
      (lambda (x)
@@ -149,42 +137,20 @@
    `#(noreply ,(make-state remote-pid pid
                            waiters waiters
                            ext-port-ref (state-ext-port-ref))))
-;; Erlang test for fourth
-;; lfecljapp:handle_info({pong, "oranges"}, {state,"apples",[],undefined}).
-;; {noreply,{state,"apples",[],undefined}}
-;;
-;; LFE test for fourth
-;; (handle_info #(pong 798) (make-state remote-pid 123))
+  ;; match 4
   (((tuple 'pong _) state)
    `#(noreply ,state))
-;; Erlang test for fifth
-;; lfecljapp:handle_info({234,{exit-status,"success"}}, {state,123,[],234}).
-;; ERROR: external java app exited with status "success"
-;; {stop,{error,{java_app_exit,"success"}},{state,123,[],234}}
-;;
-;; LFE tests for fifth
-;; (handle_info #(567 #(exit-status "bad calc")) (make-state ext-port-ref 567))
-  (((tuple port (tuple 'exit-status status)) (= (match-state ext-port-ref ext-port)
+  ;; match 5
+  (((tuple port (tuple 'exit_status status)) (= (match-state ext-port-ref ext-port)
                                                 state)) (when (== port ext-port))
    (ERROR "External java app exited with status: '~p'" (list status))
    `#(stop #(error #(java-app-exit ,status)) ,state))
-;; Erlang test for sixth
-;; lfecljapp:handle_info({'EXIT',123,"run error"}, {state,123,[],undefined}).
-;; ERROR: external java mbox exited with reason "run error"
-;; {stop,{error,{java_mbox_exit,"run error"}},
-;;       {state,123,[],undefined}}
-;;
-;; LFE tests for sixth
-;; (handle_info #(EXIT 567 "bad calc") (make-state remote-pid 567))
+  ;; match 6
   (((tuple 'EXIT pid reason) (= (match-state remote-pid remote-pid)
                                 state)) (when (== pid remote-pid))
    (ERROR "External java mbox exited with reason: '~p'" (list reason))
    `#(stop #(error #(java-mbox-exit ,reason)) ,state))
-;; Erlang test for seventh
-;; lfecljapp:handle_info(weee, {state,"nothing here",[],undefined}).
-;; ERROR: unhandled info, weee
-;; {noreply,{state,"nothing here",[],undefined}}
-;;
+  ;; match 7
   ((info state)
    (ERROR "Unhandled info: '~p'" (list info))
    `#(noreply ,state)))
@@ -226,15 +192,16 @@
          ((tuple 'ok cmd) (application:get_env 'lfecljapp 'cmd))
          ((tuple 'ok port) (application:get_env 'lfecljapp 'epmd_port))
          (priv-dir (code:priv_dir 'lfecljapp))
-         (log-file-name (++ (atom_to_list node) "_clj.log"))
-         (full-cmd (++ "java -Dnode=\"" (atom_to_list node) "\" -Dmbox=\""
-                       (atom_to_list mbox) "\" -Dcookie=\""
-                       (atom_to_list (erlang:get_cookie)) "\" -Dempd_port="
-                       (lists:flatten (io_lib:format "~p" (list port)))
+         (log-file-name (++ (atom_to_list (node)) "_clj.log"))
+         (full-cmd (++ "java -Dnode=\"" (atom_to_list node)
+                       "\" -Dmbox=\"" (atom_to_list mbox)
+                       "\" -Dcookie=\"" (atom_to_list (erlang:get_cookie))
+                       "\" -Depmd_port=" (lists:flatten
+                                           (io_lib:format "~p" (list port)))
                        " -Dlogfile=\"" priv-dir "/" log-file-name
                        "\" -classpath " priv-dir "/" cmd " ")))
-    (INFO "starting clojure app with cmd ~p" (list full-cmd))
-    (open_port `#(spawn ,full-cmd) 'exit-status)))
+    (INFO "Starting clojure app with cmd: ~p" (list full-cmd))
+    (open_port `#(spawn ,full-cmd) (list 'exit_status))))
 
 (defun ping (host node mbox)
   (lfecljapp-util:ping mbox (full-node-name host node) (self)))
