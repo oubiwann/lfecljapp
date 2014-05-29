@@ -15,7 +15,7 @@ The Erlang code was completely replaced with LFE.
 This project demonstrates how one can:
 
 1. Create a Clojure project which utilizes Erlang JInterface to communicate
-   with Erlang nodes,
+   with LFE nodes,
 1. Start a supervised Clojure node in LFE,
 1. Send a message to Clojure nodes from LFE, and
 1. Receive responses from the Clojure nodes in LFE.
