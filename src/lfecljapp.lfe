@@ -116,15 +116,11 @@
 ;; @end
 ;;--------------------------------------------------------------------
 (defun handle_info
-
-  ;; match 1
   (('ping (= (match-state remote-pid 'undefined) state))
     (gen_server:cast (self) 'ping)
     `#(noreply ,state))
-  ;; match 2
   (('ping state)
    `#(noreply ,state))
-  ;; match 3
   (((tuple 'pong pid) (= (match-state remote-pid 'undefined
                                       waiters waiters)
                          state))
@@ -137,20 +133,16 @@
    `#(noreply ,(make-state remote-pid pid
                            waiters waiters
                            ext-port-ref (state-ext-port-ref))))
-  ;; match 4
   (((tuple 'pong _) state)
    `#(noreply ,state))
-  ;; match 5
   (((tuple port (tuple 'exit_status status)) (= (match-state ext-port-ref ext-port)
                                                 state)) (when (== port ext-port))
    (ERROR "External java app exited with status: '~p'" (list status))
    `#(stop #(error #(java-app-exit ,status)) ,state))
-  ;; match 6
   (((tuple 'EXIT pid reason) (= (match-state remote-pid remote-pid)
                                 state)) (when (== pid remote-pid))
    (ERROR "External java mbox exited with reason: '~p'" (list reason))
    `#(stop #(error #(java-mbox-exit ,reason)) ,state))
-  ;; match 7
   ((info state)
    (ERROR "Unhandled info: '~p'" (list info))
    `#(noreply ,state)))
