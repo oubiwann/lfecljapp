@@ -23,6 +23,7 @@
   ext-port-ref)
 
 (defun server-name () (MODULE))
+;; The following is needed by eunit.hrl
 (defun FILE () (++ (atom_to_list (MODULE)) ".lfe"))
 ;;;===================================================================
 ;;; API
