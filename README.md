@@ -44,7 +44,7 @@ $ make compile
 
 ## Running
 
-Once everything has compile successfully, you can start an Erlang shell and
+Once everything has compiled successfully, you can start an Erlang shell and
 then bring the app up:
 
 ```bash
