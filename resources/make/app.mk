@@ -29,7 +29,7 @@ dev:
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting shell ..."
 	@ERL_LIBS=$(ERL_LIBS) \
-	PATH=$(SCRIPT_PATH) lfe -sname lfenode@$(HOST) \
+	PATH=$(SCRIPT_PATH) lfetool repl lfe -sname lfenode@$(HOST) \
 	-s 'lfeclj-app' -pa `pwd`/ebin
 
 repl: erlang
