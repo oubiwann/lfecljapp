@@ -2,7 +2,6 @@ PROJECT = lfecljapp
 LIB = $(PROJECT)
 DEPS = ./deps
 BIN_DIR = ./bin
-EXPM = $(BIN_DIR)/expm
 LFETOOL=$(BIN_DIR)/lfetool
 SOURCE_DIR = ./src
 OUT_DIR = ./ebin

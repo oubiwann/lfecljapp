@@ -36,14 +36,14 @@ dev:
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting shell ..."
 	@ERL_LIBS=$(ERL_LIBS) \
-	PATH=$(SCRIPT_PATH) lfetool repl lfe -sname lfenode@$(HOST) \
-	-s 'lfeclj-app' -pa `pwd`/$(OUT_DIR)
+	PATH=$(SCRIPT_PATH) ./deps/lfe/bin/lfe -sname "lfenode@$(HOST)" \
+	-s 'lfeclj-app' -pa "`pwd`/$(OUT_DIR)"
 
 repl: erlang
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting shell ..."
 	@ERL_LIBS=$(ERL_LIBS) \
-	PATH=$(SCRIPT_PATH) lfetool repl lfe -sname lfenode@$(HOST) -pa `pwd`/$(OUT_DIR)
+	PATH=$(SCRIPT_PATH) ./deps/lfe/bin/lfe -sname "lfenode@$(HOST)" -pa "`pwd`/$(OUT_DIR)"
 
 repl-no-deps: erlang-no-deps
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
