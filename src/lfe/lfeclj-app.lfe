@@ -5,6 +5,9 @@
           (stop 1)))
 
 (defun start ()
+  (logjam:start)
+  (logjam:set-level 'lager_console_backend
+                    (lcfg:get-in (lcfg-file:read-local) '(logging log-level)))
   (application:load 'lfecljapp)
   (application:start 'lfecljapp))
 

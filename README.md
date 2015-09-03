@@ -65,16 +65,17 @@ $ make dev
 Once the app has started, you will see output like the following (elided):
 
 ```
-(lfenode@cahwsx01)> lfecljapp.lfe:187:<0.44.0>:...
-INFO: Starting clojure app with cmd "java -Dnode=...
+(lfenode@cahwsx01)>
+14:03:52.849 [info] Application lager started on node lfenode@cahwsx01
+14:03:52.855 [info] Starting clojure app with cmd: "java ..."
 ```
 
 At this point, you are in the shell, and before too long you should also see
 a log message display showing the successful start of the Clojure node:
 
 ```
-(lfenode@cahwsx01)> lfecljapp.lfe:118:<0.42.0>:...
-INFO: Connection to java node established, pid: <6709.1.0>
+14:03:52.856 [info] Application lfecljapp started on node lfenode@cahwsx01
+14:03:55.898 [info] Connection to java node established, pid: <11113.1.0>
 ```
 
 ## Using
@@ -84,7 +85,7 @@ spin with a ping command:
 
 ```cl
 (lfenode@cahwsx01)> (lfecljapp:ping "clj-node@cahwsx01" "clj-mbox")
-#(ping <0.32.0>)
+#(ping <0.83.0>)
 ```
 
 The node name used in the example above was taken from the output when the
@@ -96,7 +97,7 @@ To see the response from the Clojure node, you'll need to flush the shell:
 
 ```cl
 (lfenode@cahwsx01)> (c:flush)
-Shell got {pong,<6709.1.0>}
+Shell got {pong,<11113.1.0>}
 ok
 ```
 
