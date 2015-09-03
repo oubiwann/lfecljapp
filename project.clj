@@ -1,4 +1,4 @@
-(defproject cljnode "0.1.3"
+(defproject cljnode "0.2.0"
   :jvm-opts ["-Ddev_env=dev"
              "-Dnode=cljnode@127.0.0.1"
              "-Dmbox=mboxname"
