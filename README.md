@@ -56,7 +56,8 @@ $ make repl
 ok
 ```
 
-Or, you can just use the ``dev`` make target:
+Alternatively, you can use the ``dev`` make target which will start the
+lfecljapp for you automatically:
 
 ```bash
 $ make dev
@@ -93,7 +94,9 @@ Clojure node was started up. In particular, look for the line beginning with
 ``INFO: Starting clojure app ...`` and the value associated with the ``-Dnode``
 parameter. That's your destination node in this case.
 
-To see the response from the Clojure node, you'll need to flush the shell:
+To see the response from the Clojure node, you'll need to flush the shell,
+since the Clojure port sends its responses to the caller, and in this case the
+caller is the LFE REPL:
 
 ```cl
 (lfenode@cahwsx01)> (c:flush)
